@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students/api/")
 public class StudentController {
 
-    // http://localhost:8080/student
+    // http://localhost:8080/students/api/student
     @GetMapping("student")
     public ResponseEntity<Student> getStudent() {
         Student student = new Student(
@@ -25,8 +26,8 @@ public class StudentController {
                 .body(student);
     }
 
-    // http://localhost:8080/students
-    @GetMapping("/students")
+    // http://localhost:8080/students/api/allstudents
+    @GetMapping("allstudents")
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(new Student(1, "Ravi", "Kumar"));
@@ -36,8 +37,8 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    // http://localhost:8080/students/1/admin/admin
-    @GetMapping("/students/{id}/{first-name}/{last-name}")
+    // http://localhost:8080/students/api/1/admin/administrator
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentPathvariable(@PathVariable("id") int studentId,
                                        @PathVariable("first-name") String firstName,
                                        @PathVariable("last-name") String lastName) {
@@ -45,8 +46,8 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    // http://localhost:8080/students/query?studentId=1&firstName=Ashok&lastName=Koda
-    @GetMapping("/students/query")
+    // http://localhost:8080/students/api/query?studentId=1&firstName=Harish&lastName=Koda
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int studentId,
                                           @RequestParam String firstName,
                                           @RequestParam String lastName) {
@@ -54,8 +55,8 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    // http://localhost:8080/students/create
-    @PostMapping("/students/create")
+    // http://localhost:8080/students/api/create
+    @PostMapping("create")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
@@ -64,16 +65,16 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/students/1/update
-    @PutMapping("/students/{id}/update")
+    // http://localhost:8080/students/api/1/update
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
         return ResponseEntity.ok(student);
     }
 
-    // http://localhost:8080/students/3/delete
-    @DeleteMapping("students/{id}/delete")
+    // http://localhost:8080/students/api/1/delete
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId) {
         return ResponseEntity.ok("Student deleted successfully!.");
     }
